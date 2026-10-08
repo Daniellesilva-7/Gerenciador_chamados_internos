@@ -5,20 +5,23 @@
     <title>Lista de tarefas</title>
     </head>
     <body>
-        <h1>Lista inicial de tarefas</h1>
+        <h1>Lista de tarefas cadastradas</h1>
         {% if tarefas %}
         <ul>
         {% for tarefa in tarefas %}
             <li>
             <strong>{{ tarefa.titulo }}</strong> —
-            prioridade: {{ tarefa.prioridade }} —
-            situação: {{ tarefa.situacao }}
+            categoria: {{ tarefa.categoria.nome }} —
+            prioridade: {{ tarefa.get_prioridade_display }} —
+            situação: {{ tarefa.get_situacao_display }}
             </li>
             {% endfor %}
         </ul>
         {% else %}
         <p>Nenhuma tarefa cadastrada até o momento.</p>
         {% endif %}
-        <a href="{% url 'inicio' %}">Voltar ao início</a>
+        <a href="{% url 'inicio' %}">
+            Voltar ao início
+        </a>
     </body>
 </html>

@@ -1,24 +1,17 @@
 from django.shortcuts import render
+from .models import Tarefa
 
 
 def inicio(request):
     return render(request, "tarefas/inicio.html")
 
-
 def lista_tarefas(request):
-    tarefas = [
-        {
-            "titulo": "Revisar URLs no Django",
-            "prioridade": "Alta",
-            "situacao": "Pendente",
-        },
-        {
-            "titulo": "Criar template de listagem",
-            "prioridade": "Média",
-            "situacao": "Concluída",
-        },
-    ]
+    tarefas = Tarefa.objects.select_related(
+        "categoria"
+    ).order_by("data_prevista")
 
-    contexto = {"tarefas": tarefas}
-
-    return render(request, "tarefas/lista.html", contexto)
+    return render(
+        request,
+        "tarefas/lista.html",
+        {"tarefas": tarefas}
+    )

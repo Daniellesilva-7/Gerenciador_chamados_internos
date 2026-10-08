@@ -56,6 +56,84 @@ O projeto anterior utilizava uma lista de dicionários. Nesta nova versão, cada
 
 A situação inicial das tarefas é `Pendente`. O método `concluir()` altera a situação para `Concluída`.
 
+## Semana 7 — Modelagem e Persistência de Dados com Django
+
+### Objetivo
+
+Nesta etapa, o projeto foi desenvolvido utilizando o framework Django, com o objetivo de implementar a persistência de dados, permitindo que categorias e tarefas continuem armazenadas mesmo após o encerramento e reinicialização do servidor.
+
+### Implementações realizadas
+
+- Criação do model `Categoria`, contendo o campo nome.
+- Criação do model `Tarefa`, contendo título, descrição, prioridade, data prevista, situação e categoria.
+- Implementação do relacionamento `ForeignKey` entre Categoria e Tarefa.
+- Implementação do método `__str__` nos dois models.
+- Criação e aplicação das migrações no banco de dados SQLite.
+- Registro dos models no Django Admin.
+- Cadastro das categorias Estudos e Pessoal.
+- Cadastro das tarefas Revisar Django e Organizar estudos.
+- Realização de consultas utilizando o ORM do Django.
+- Atualização da situação de uma tarefa de Pendente para Concluída.
+
+### Comandos utilizados
+
+Para gerar e aplicar as migrações:
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+Para iniciar o servidor:
+
+```bash
+python manage.py runserver
+```
+
+Para acessar o shell do Django:
+
+```bash
+python manage.py shell
+```
+
+### Consultas realizadas pelo ORM
+
+```python
+from tarefas.models import Categoria, Tarefa
+
+# Listar todas as tarefas
+Tarefa.objects.all()
+
+# Consultar tarefas pendentes
+Tarefa.objects.filter(situacao="PENDENTE")
+
+# Ordenar pela data prevista
+Tarefa.objects.order_by("data_prevista")
+
+# Atualizar uma tarefa
+tarefa = Tarefa.objects.get(titulo="Revisar Django")
+tarefa.situacao = "CONCLUIDA"
+tarefa.save()
+```
+
+### Dificuldade encontrada e solução
+
+Durante a implementação, foi identificado um problema na exibição dos nomes das categorias e tarefas no Django Admin. Os registros apareciam como `Categoria object` e `Tarefa object`, em vez de apresentar seus respectivos nomes.
+
+O problema ocorreu devido à indentação incorreta dos métodos `__str__` nos models.
+
+A solução foi corrigir a indentação e os retornos dos métodos, utilizando `self.nome` para Categoria e `self.titulo` para Tarefa.
+
+Após a correção, os registros passaram a ser exibidos corretamente no painel administrativo.
+
+### Validação da persistência
+
+Foram cadastradas duas categorias e duas tarefas no banco de dados SQLite.
+
+A tarefa Revisar Django foi atualizada para Concluída, enquanto a tarefa Organizar estudos permaneceu Pendente.
+
+Após interromper e reiniciar o servidor Django, os registros continuaram disponíveis no painel administrativo, confirmando a persistência dos dados.
+
 -- Autoria
 
 Aluna: Danielle Gil Silva RA:202422994
