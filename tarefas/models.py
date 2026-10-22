@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Categoria(models.Model):
     nome = models.CharField(max_length=100)
@@ -37,6 +38,8 @@ class Tarefa(models.Model):
         on_delete=models.PROTECT
     )
  
+    responsavel = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="responsável")
+
     def __str__(self):
         return self.titulo
 

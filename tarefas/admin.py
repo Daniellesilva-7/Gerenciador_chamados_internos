@@ -16,13 +16,15 @@ class TarefaAdmin(admin.ModelAdmin):
         "categoria",
         "prioridade",
         "situacao",
-        "data_prevista"
+        "data_prevista",
+        "responsavel"
     )
 
     list_filter = (
         "situacao",
         "prioridade",
-        "categoria"
+        "categoria",
+        "responsavel"
     )
 
     search_fields = ("titulo", "descricao")
